@@ -1,1 +1,16 @@
-hello index
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Submission</title>
+</head>
+<body>
+<h2>Submit Your Prompt</h2>
+<form action="/prompt" method="post">
+    <label for="prompt">Prompt:</label><br>
+    <input type="text" id="prompt" name="prompt" required><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>

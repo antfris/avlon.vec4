@@ -1,14 +1,33 @@
 const express = require('express');
-const path = require('path'); // Require the path module
+const bodyParser = require('body-parser');
+const path = require('path');
 const app = express();
 const port = 3000;
 
-// Serve your static files (e.g., HTML, CSS, JS) from the 'public' directory
+
+let prompt = "Write a story about a cat and a dog who are best friends.";
+
+// Middleware to parse the body of POST requests
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Serve static files from the 'public' directory
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  // Use res.sendFile to send the HTML file
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/prompt', (req, res) => {
+    res.send(prompt);
+});
+
+// Handle form submission to '/prompt' endpoint
+app.post('/prompt', (req, res) => {
+  const userPrompt = req.body.prompt; // Access the submitted prompt
+  console.log(`Received prompt: ${userPrompt}`);
+  prompt = userPrompt;
+  // Process the prompt as needed
+  res.send(`Submitted prompt: ${userPrompt}`); // Send a response back to the client
 });
 
 app.listen(port, () => {
