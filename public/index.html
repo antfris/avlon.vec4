@@ -24,16 +24,44 @@
     input[type="text"], input[type="submit"] {
         margin: 10px 0;
     }
+    #submissionMessage {
+        color: lime;
+        margin-top: 20px;
+    }
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("promptForm").addEventListener("submit", function(e) {
+            e.preventDefault(); // Prevent the default form submission
+            const promptValue = document.getElementById("prompt").value;
+            fetch("/prompt", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `prompt=${encodeURIComponent(promptValue)}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("submissionMessage").innerText = data;
+                document.getElementById("promptForm").reset(); // Clear the form after submission
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
 </head>
 <body>
 <div>
     <h2>Submit Your Prompt</h2>
-    <form action="/prompt" method="post">
+    <form id="promptForm">
         <label for="prompt">Prompt:</label><br>
         <input type="text" id="prompt" name="prompt" required><br>
         <input type="submit" value="Submit">
     </form>
+    <div id="submissionMessage"></div>
 </div>
 </body>
 </html>
