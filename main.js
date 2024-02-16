@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/prompt', (req, res) => {
-    res.send(prompt);
+    res.json({prompt: prompt});
 });
 
 // Handle form submission to '/prompt' endpoint
